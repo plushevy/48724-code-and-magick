@@ -589,14 +589,14 @@ window.Game = (function () {
            * @return {Verdict}
            */
           function (state) {
-          var me = state.objects.filter(function (object) {
-              return object.type === ObjectType.ME;
-            })[0];
+            var me = state.objects.filter(function (object) {
+            return object.type === ObjectType.ME;
+          })[0];
 
-          return me.state === ObjectState.DISPOSED ?
+            return me.state === ObjectState.DISPOSED ?
               Verdict.FAIL :
               Verdict.CONTINUE;
-        },
+          },
 
           /**
            * Если нажата клавиша Esc игра ставится на паузу.
@@ -604,8 +604,8 @@ window.Game = (function () {
            * @return {Verdict}
            */
           function (state) {
-          return state.keysPressed.ESC ? Verdict.PAUSE : Verdict.CONTINUE;
-        },
+            return state.keysPressed.ESC ? Verdict.PAUSE : Verdict.CONTINUE;
+          },
 
           /**
            * Игра прекращается если игрок продолжает играть в нее два часа подряд.
@@ -613,7 +613,7 @@ window.Game = (function () {
            * @return {Verdict}
            */
           function (state) {
-          return Date.now() - state.startTime > 3 * 60 * 1000 ?
+            return Date.now() - state.startTime > 3 * 60 * 1000 ?
               Verdict.FAIL :
               Verdict.CONTINUE;
           }
