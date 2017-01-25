@@ -28,11 +28,9 @@ var makeRandomColor = function (ctx, rgbcolor) {
     ctx.fillStyle = ['rgba(', randomColor1, ', ', randomColor2, ', ', randomColor3, ', ', randomOpacity, ')'].join('');
   }
 };
-var max = -1;
+
 // рисуем колонки
-var drawColumn = function (ctx, names[i], times[i], histoX, histoY, histoHeight, columnIndent, columnWidth) {
-  var name = names[i];
-  var time = times[i];
+var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnIndent, columnWidth) {
 
   // var histoX = 120;
   // var histoY = 100;
@@ -78,16 +76,17 @@ window.renderStatistics = function (ctx, names, times) {
 
   var max = -1;
 
-  for(var i = 0 ; i < times.length; i++ ) {
+  for (var i = 0; i < times.length; i++) {
     var time = times[i];
     if (time > max) {
       max = time;
     }
   }
 
-
   for (var i = 0; i < times.length; i++) {
-     drawColumn(ctx, name, time, 120, 100, 150, 50, 40);
-  }
+    var name = names[i];
+    var time = times[i];
 
+    drawColumn(ctx, name, time, 120, 100, 150, 50, 40);
+  }
 };
