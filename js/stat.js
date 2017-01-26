@@ -52,7 +52,7 @@ var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnI
     makeRandomColor(ctx, 'blue');
   }
 
-  ctx.fillRect(x, y, columnWidth, height);
+  ctx.fillRect(columnX, columnY, columnWidth, height);
 
   ctx.fillStyle = '#000';
   ctx.fillText(name, columnX, nameY);
