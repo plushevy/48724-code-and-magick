@@ -3,10 +3,10 @@
 // функкция отрисовки текста
 var textY = 20;
 var drawText = function (ctx, text) {
-  function counterY() {
+  function makeCountY() {
     return textY + 20;
   }
-  textY = counterY();
+  textY = makeCountY();
   var textX = 120;
   ctx.fillText(text, textX, textY);
 };
@@ -55,19 +55,19 @@ var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnI
   ctx.fillRect(x, y, columnWidth, height);
 
   ctx.fillStyle = '#000';
-  сtx.fillText(name, x, nameY);
-  ctx.fillText(time.toFixed(0), x, timeY);
+  ctx.fillText(name, columnX, nameY);
+  ctx.fillText(time.toFixed(0), columnX, timeY);
 };
 
 
 window.renderStatistics = function (ctx, names, times) {
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect = (110, 20, 420, 270);
-  ctx.strokeRect = (110, 20, 420, 270);
+  ctx.fillRect(110, 20, 420, 270);
 
   ctx.fillStyle = 'rgba(256, 256, 256, 1.0)';
-  ctx.fillRect = (100, 10, 420, 270);
+  ctx.fillRect(100, 10, 420, 270);
+  ctx.strokeRect(100, 10, 420, 270);
 
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
