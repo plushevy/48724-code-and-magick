@@ -77,7 +77,7 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Список результатов:');
 
   // получаем максимальное значение
-  max = getMax();
+  max = getMax(times);
 
   for (i = 0; i < names.length; i++) {
     var name = names[i];
