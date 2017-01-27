@@ -18,6 +18,18 @@ var makeRandomColorBlue = function (ctx) {
   ctx.fillStyle = ['rgba(0, 0, ', randomColor, ',', randomOpacity, ')'].join('');
 };
 
+// получаем максимальное значение
+var getMax = function (times) {
+  max = times[0];
+
+  for (i = 1; i < times.length; i++) {
+    if (times[i] > max) {
+      max = times[i];
+    }
+  }
+  return max;
+};
+
 // рисуем колонки
 var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnIndent, columnWidth) {
 
@@ -65,12 +77,7 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Список результатов:');
 
   // получаем максимальное значение
-  max = times[0];
-  for (i = 1; i < times.length; i++) {
-    if (times[i] > max) {
-      max = times[i];
-    }
-  }
+  max = getMax(times);
 
   for (i = 0; i < names.length; i++) {
     var name = names[i];
