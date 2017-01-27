@@ -7,8 +7,7 @@ var drawText = function (ctx, text) {
     return textY + 20;
   }
   textY = makeCountY();
-  var textX = 120;
-  ctx.fillText(text, textX, textY);
+  ctx.fillText(text, 120, textY);
 };
 
 // функция заливки рандомным синим
@@ -75,17 +74,15 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Список результатов:');
 
   var max = -1;
-
-  for (var i = 0; i < times.length; i++) {
-    var time = times[i];
+  for (var n = 0; n < times.length; n++) {
+    var time = times[n];
     if (time > max) {
       max = time;
     }
   }
 
-  for (var i = 0; i < times.length; i++) {
+  for (var i = 0; i < names.length; i++) {
     var name = names[i];
-    var time = times[i];
 
     drawColumn(ctx, name, time, 120, 100, 150, 50, 40);
   }
