@@ -1,8 +1,6 @@
 'use strict';
 
 var textY;
-var i;
-var max;
 
 // функкция отрисовки текста
 var drawText = function (ctx, text) {
@@ -20,15 +18,16 @@ var makeRandomColorBlue = function (ctx) {
 
 // получаем максимальное значение
 var getMax = function (times) {
-  max = times[0];
+  var max = times[0];
 
-  for (i = 1; i < times.length; i++) {
+  for (var i = 1; i < times.length; i++) {
     if (times[i] > max) {
       max = times[i];
     }
   }
   return max;
 };
+
 
 // рисуем колонки
 var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnIndent, columnWidth) {
@@ -39,8 +38,9 @@ var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnI
   // var step = histoHeight / max;
   // var columnIndent = 50;
   // var columnWidth = 40;
+  var step;
+  var i;
 
-  var step = histoHeight / max;
   var height = step * time;
   var columnX = histoX + (columnWidth * i) + (columnIndent * i);
   var columnY = histoY + (histoHeight - height);
@@ -76,10 +76,10 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Ура Вы победили !');
   drawText(ctx, 'Список результатов:');
 
-  // получаем максимальное значение
-  max = getMax(times);
+  var histoHeight;
+  var step = histoHeight / getMax(times);
 
-  for (i = 0; i < names.length; i++) {
+  for (var i = 0; i < names.length; i++) {
     var name = names[i];
     var time = times[i];
 
