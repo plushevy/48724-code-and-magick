@@ -11,21 +11,12 @@ var drawText = function (ctx, text) {
 };
 
 // функция заливки рандомным синим
-var makeRandomColor = function (ctx, rgbcolor) {
-  var randomColor1 = ((Math.random() * 5) * 50).toFixed(0);
-  var randomColor2 = ((Math.random() * 5) * 50).toFixed(0);
-  var randomColor3 = ((Math.random() * 5) * 50).toFixed(0);
+var makeRandomColorBlue = function (ctx) {
+  var randomColor = ((Math.random() * 5) * 50).toFixed(0);
   var randomOpacity = (Math.random()).toFixed(1);
 
-  if (rgbcolor === 'blue') {
-    ctx.fillStyle = ['rgba(0, 0, ', randomColor1, ',', randomOpacity, ')'].join('');
-  } else if (rgbcolor === 'red') {
-    ctx.fillStyle = ['rgba(', randomColor1, ', 0, 0,', randomOpacity, ')'].join('');
-  } else if (rgbcolor === 'green') {
-    ctx.fillStyle = ['rgba(0, ', randomColor1, ', 0,', randomOpacity, ')'].join('');
-  } else {
-    ctx.fillStyle = ['rgba(', randomColor1, ', ', randomColor2, ', ', randomColor3, ', ', randomOpacity, ')'].join('');
-  }
+  ctx.fillStyle = ['rgba(0, 0, ', randomColor, ',', randomOpacity, ')'].join('');
+
 };
 
 // рисуем колонки
@@ -48,7 +39,7 @@ var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnI
   if (name === 'Вы') {
     ctx.fillStyle = 'rgba(255, 0, 0, 1)';
   } else {
-    makeRandomColor(ctx, 'blue');
+    makeRandomColorBlue(ctx);
   }
 
   ctx.fillRect(columnX, columnY, columnWidth, height);
@@ -74,15 +65,16 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Список результатов:');
 
   var max = -1;
-  for (var n = 0; n < times.length; n++) {
-    var time = times[n];
+  for (var i = 0; i < times.length; i++) {
+    var time = times[i];
     if (time > max) {
       max = time;
     }
   }
 
-  for (var i = 0; i < names.length; i++) {
+  for (i = 0; i < names.length; i++) {
     var name = names[i];
+    time = times[i];
 
     drawColumn(ctx, name, time, 120, 100, 150, 50, 40);
   }
