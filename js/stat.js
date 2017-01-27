@@ -1,10 +1,10 @@
 'use strict';
 
-// функкция отрисовки текста
 var textY;
 var i;
 var max;
 
+// функкция отрисовки текста
 var drawText = function (ctx, text) {
   ctx.fillText(text, 120, textY);
   textY += 20;  // 20 - высота строки
@@ -77,7 +77,7 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Список результатов:');
 
   // получаем максимальное значение
-  max = getMax(times);
+  max = getMax();
 
   for (i = 0; i < names.length; i++) {
     var name = names[i];
