@@ -9,8 +9,8 @@ var drawText = function (ctx, text) {
 
 // функция заливки рандомным синим
 var makeRandomColorBlue = function (ctx) {
-  var randomColor = ((Math.random() * 5) * 50).toFixed(0);
-  var randomOpacity = (Math.random()).toFixed(1);
+  var randomColor = (Math.random() * 5 * 50).toFixed(0);
+  var randomOpacity = Math.random().toFixed(1);
   return ['rgba(0, 0, ', randomColor, ',', randomOpacity, ')'].join('');
 };
 
