@@ -1,7 +1,6 @@
 'use strict';
 
 var textY;
-
 // функкция отрисовки текста
 var drawText = function (ctx, text) {
   ctx.fillText(text, 120, textY);
@@ -30,16 +29,13 @@ var getMax = function (times) {
 
 
 // рисуем колонки
-var drawColumn = function (ctx, name, time, histoX, histoY, histoHeight, columnIndent, columnWidth) {
+var drawColumn = function (ctx, name, time, step, i) {
 
-  // var histoX = 120;
-  // var histoY = 100;
-  // var histoHeight = 150;
-  // var step = histoHeight / max;
-  // var columnIndent = 50;
-  // var columnWidth = 40;
-  var step;
-  var i;
+  var histoX = 120;
+  var histoY = 100;
+  var histoHeight = 150;
+  var columnIndent = 50;
+  var columnWidth = 40;
 
   var height = step * time;
   var columnX = histoX + (columnWidth * i) + (columnIndent * i);
@@ -76,13 +72,13 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Ура Вы победили !');
   drawText(ctx, 'Список результатов:');
 
-  var histoHeight;
+  var histoHeight = 150;
   var step = histoHeight / getMax(times);
 
   for (var i = 0; i < names.length; i++) {
     var name = names[i];
     var time = times[i];
 
-    drawColumn(ctx, name, time, 120, 100, 150, 50, 40);
+    drawColumn(ctx, name, time, step, i);
   }
 };
