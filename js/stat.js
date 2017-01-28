@@ -11,8 +11,7 @@ var drawText = function (ctx, text) {
 var makeRandomColorBlue = function (ctx) {
   var randomColor = ((Math.random() * 5) * 50).toFixed(0);
   var randomOpacity = (Math.random()).toFixed(1);
-
-  ctx.fillStyle = ['rgba(0, 0, ', randomColor, ',', randomOpacity, ')'].join('');
+  return ['rgba(0, 0, ', randomColor, ',', randomOpacity, ')'].join('');
 };
 
 // получаем максимальное значение
@@ -46,7 +45,7 @@ var drawColumn = function (ctx, name, time, step, i) {
   if (name === 'Вы') {
     ctx.fillStyle = 'rgba(255, 0, 0, 1)';
   } else {
-    makeRandomColorBlue(ctx);
+    ctx.fillStyle = makeRandomColorBlue(ctx);
   }
 
   ctx.fillRect(columnX, columnY, columnWidth, height);
