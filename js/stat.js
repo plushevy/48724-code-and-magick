@@ -8,7 +8,7 @@ var drawText = function (ctx, text) {
 };
 
 // функция заливки рандомным синим
-var makeRandomColorBlue = function (ctx) {
+var makeRandomColorBlue = function () {
   var randomColor = (Math.random() * 5 * 50).toFixed(0);
   var randomOpacity = Math.random().toFixed(1);
   return ['rgba(0, 0, ', randomColor, ',', randomOpacity, ')'].join('');
@@ -45,7 +45,7 @@ var drawColumn = function (ctx, name, time, step, i) {
   if (name === 'Вы') {
     ctx.fillStyle = 'rgba(255, 0, 0, 1)';
   } else {
-    ctx.fillStyle = makeRandomColorBlue(ctx);
+    ctx.fillStyle = makeRandomColorBlue();
   }
 
   ctx.fillRect(columnX, columnY, columnWidth, height);
