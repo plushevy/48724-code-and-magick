@@ -43,6 +43,9 @@ var changeCoatColors = function () {
   ];
 
   wizardCoat.style.fill = getRandomArrItem(wizardCoatColors);
+  // wizardCoat.style.fill = wizardCoatColors[
+  //   Math.floor(Math.random * wizardCoatColors.length)
+  // ];
 };
 
 // меняем цвет глаз
@@ -68,12 +71,12 @@ var changeFireballColors = function () {
     '#e6e848'
   ];
 
-  fireball.style.background = getRandomArrItem(fireballColors);
+  fireball.style.backgroundColor = getRandomArrItem(fireballColors);
 };
 
 setupOpen.addEventListener('click', showOverlay);
 setupClose.addEventListener('click', closeOverlay);
-validationSetupForm();
 wizardCoat.addEventListener('click', changeCoatColors);
 wizardEyes.addEventListener('click', changeEyesColors);
 fireball.addEventListener('click', changeFireballColors);
+validationSetupForm();
