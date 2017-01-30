@@ -26,7 +26,9 @@ var validationSetupForm = function () {
 
 // получаем случайный элемент массива
 var getRandomArrItem = function (arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+  return arr[
+    Math.floor(Math.random * arr.length)
+  ];
 };
 
 // меняем цвет пальто
@@ -75,3 +77,5 @@ validationSetupForm();
 wizardCoat.addEventListener('click', changeCoatColors);
 wizardEyes.addEventListener('click', changeEyesColors);
 fireball.addEventListener('click', changeFireballColors);
+
+
