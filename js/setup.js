@@ -7,7 +7,7 @@ var userName = setup.querySelector('.setup-user-name');
 var wizard = document.querySelector('#wizard');
 var wizardCoat = wizard.querySelector('#wizard-coat');
 var wizardEyes = wizard.querySelector('#wizard-eyes');
-var fireball = wizard.querySelector('#setup-fireball-wrap');
+var fireball = setup.querySelector('.setup-fireball-wrap');
 
 // открытие - закрытие оверлея
 var showOverlay = function () {
@@ -17,9 +17,12 @@ var closeOverlay = function () {
   setup.classList.add('invisible');
 };
 
-// валидация имени пользователя
-userName.required = true;
-userName.maxLength = 50;
+// валидация полей формы имени пользователя
+var validationSetupForm = function () {
+  userName.required = true;
+  userName.maxLength = 50;
+};
+
 
 // получаем случайный элемент массива
 var getRandomArrItem = function (arr) {
@@ -65,11 +68,12 @@ var changeFireballColors = function () {
     '#e6e848'
   ];
 
-  fireball.style.fill = getRandomArrItem(fireballColors);
+  fireball.style.background = getRandomArrItem(fireballColors);
 };
 
 setupOpen.addEventListener('click', showOverlay);
 setupClose.addEventListener('click', closeOverlay);
+validationSetupForm();
 wizardCoat.addEventListener('click', changeCoatColors);
 wizardEyes.addEventListener('click', changeEyesColors);
 fireball.addEventListener('click', changeFireballColors);
