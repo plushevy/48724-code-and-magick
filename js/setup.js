@@ -20,11 +20,7 @@ var showOverlay = function () {
   setupClose.setAttribute('aria-pressed', false);
   buttonSave.setAttribute('aria-pressed', false);
 
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESCAPE_KEY_CODE) {
-      closeOverlay();
-    }
-  });
+  document.addEventListener('keydown', setupKeydownHandler);
 };
 
 var closeOverlay = function () {
@@ -32,10 +28,20 @@ var closeOverlay = function () {
   setupOpen.setAttribute('aria-pressed', false);
   setupClose.setAttribute('aria-pressed', true);
   buttonSave.setAttribute('aria-pressed', true);
+
+  document.removeEventListener('keydown', setupKeydownHandler);
 };
 
+// если было нажатие
 var isActivateEvent = function (event) {
   return event.keyCode && event.keyCode === ENTER_KEY_CODE;
+};
+
+// закрытие при нажатии на esc
+var setupKeydownHandler = function (event) {
+  if (event.keyCode === ESCAPE_KEY_CODE) {
+    setup.classList.add('invisible');
+  }
 };
 
 // валидация полей формы имени пользователя
@@ -109,8 +115,7 @@ buttonSave.addEventListener('keydown', function (event) {
     closeOverlay();
   }
 });
-
-validationSetupForm();
 wizardCoat.addEventListener('click', changeCoatColors);
 wizardEyes.addEventListener('click', changeEyesColors);
 fireball.addEventListener('click', changeFireballColors);
+validationSetupForm();
