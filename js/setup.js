@@ -8,13 +8,34 @@ var wizard = document.querySelector('#wizard');
 var wizardCoat = wizard.querySelector('#wizard-coat');
 var wizardEyes = wizard.querySelector('#wizard-eyes');
 var fireball = setup.querySelector('.setup-fireball-wrap');
+var buttonSave = setup.querySelector('.button.setup-submit');
+
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
 
 // открытие - закрытие оверлея
 var showOverlay = function () {
   setup.classList.remove('invisible');
+  setupOpen.setAttribute('aria-pressed', true);
+  setupClose.setAttribute('aria-pressed', false);
+  buttonSave.setAttribute('aria-pressed', false);
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESCAPE_KEY_CODE) {
+      closeOverlay();
+    }
+  });
 };
+
 var closeOverlay = function () {
   setup.classList.add('invisible');
+  setupOpen.setAttribute('aria-pressed', false);
+  setupClose.setAttribute('aria-pressed', true);
+  buttonSave.setAttribute('aria-pressed', true);
+};
+
+var isActivateEvent = function (event) {
+  return event.keyCode && event.keyCode === ENTER_KEY_CODE;
 };
 
 // валидация полей формы имени пользователя
@@ -22,7 +43,6 @@ var validationSetupForm = function () {
   userName.required = true;
   userName.maxLength = 50;
 };
-
 
 // получаем случайный элемент массива
 var getRandomArrItem = function (arr) {
@@ -70,7 +90,26 @@ var changeFireballColors = function () {
 };
 
 setupOpen.addEventListener('click', showOverlay);
+setupOpen.addEventListener('keydown', function (event) {
+  if (isActivateEvent(event)) {
+    showOverlay();
+  }
+});
+
 setupClose.addEventListener('click', closeOverlay);
+setupClose.addEventListener('keydown', function (event) {
+  if (isActivateEvent(event)) {
+    closeOverlay();
+  }
+});
+
+buttonSave.addEventListener('click', closeOverlay);
+buttonSave.addEventListener('keydown', function (event) {
+  if (isActivateEvent(event)) {
+    closeOverlay();
+  }
+});
+
 validationSetupForm();
 wizardCoat.addEventListener('click', changeCoatColors);
 wizardEyes.addEventListener('click', changeEyesColors);
