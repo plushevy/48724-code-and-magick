@@ -109,9 +109,13 @@ setupClose.addEventListener('keydown', function (event) {
   }
 });
 
-buttonSave.addEventListener('click', closeOverlay);
+buttonSave.addEventListener('click', function (event) {
+  event.preventDefault();
+  closeOverlay();
+});
 buttonSave.addEventListener('keydown', function (event) {
   if (isActivateEvent(event)) {
+    event.preventDefault();
     closeOverlay();
   }
 });
