@@ -13,6 +13,31 @@ var buttonSave = setup.querySelector('.button.setup-submit');
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
+var wizardCoatColors = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+
+var wizardEyesColors = [
+  'black',
+  'red',
+  'blue',
+  'green',
+  'yellow'
+];
+
+var fireballColors = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 // открытие - закрытие оверлея
 var showOverlay = function () {
   setup.classList.remove('invisible');
@@ -50,51 +75,6 @@ var validationSetupForm = function () {
   userName.maxLength = 50;
 };
 
-// получаем случайный элемент массива
-var getRandomArrItem = function (arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-};
-
-// меняем цвет пальто
-var changeCoatColors = function () {
-  var wizardCoatColors = [
-    'rgb(101, 137, 164)',
-    'rgb(241, 43, 107)',
-    'rgb(146, 100, 161)',
-    'rgb(56, 159, 117)',
-    'rgb(215, 210, 55)',
-    'rgb(0, 0, 0)'
-  ];
-
-  wizardCoat.style.fill = getRandomArrItem(wizardCoatColors);
-};
-
-// меняем цвет глаз
-var changeEyesColors = function () {
-  var wizardEyesColors = [
-    'black',
-    'red',
-    'blue',
-    'green',
-    'yellow'
-  ];
-
-  wizardEyes.style.fill = getRandomArrItem(wizardEyesColors);
-};
-
-// меняем цвет фаербола
-var changeFireballColors = function () {
-  var fireballColors = [
-    '#ee4830',
-    '#30a8ee',
-    '#5ce6c0',
-    '#e848d5',
-    '#e6e848'
-  ];
-
-  fireball.style.backgroundColor = getRandomArrItem(fireballColors);
-};
-
 setupOpen.addEventListener('click', showOverlay);
 setupOpen.addEventListener('keydown', function (event) {
   if (isActivateEvent(event)) {
@@ -119,7 +99,60 @@ buttonSave.addEventListener('keydown', function (event) {
     closeOverlay();
   }
 });
-wizardCoat.addEventListener('click', changeCoatColors);
-wizardEyes.addEventListener('click', changeEyesColors);
-fireball.addEventListener('click', changeFireballColors);
+
+// меняем цвет пальто, глаз и файрбола
+window.colorizeElement(wizardCoat, wizardCoatColors, 'fill');
+window.colorizeElement(wizardEyes, wizardEyesColors, 'fill');
+window.colorizeElement(fireball, fireballColors, 'background');
+
 validationSetupForm();
+
+// меняем цвет пальто
+// var changeCoatColors = function () {
+//   var wizardCoatColors = [
+//     'rgb(101, 137, 164)',
+//     'rgb(241, 43, 107)',
+//     'rgb(146, 100, 161)',
+//     'rgb(56, 159, 117)',
+//     'rgb(215, 210, 55)',
+//     'rgb(0, 0, 0)'
+//   ];
+
+//   wizardCoat.style.fill = getRandomArrItem(wizardCoatColors);
+// };
+
+
+// меняем цвет глаз
+// var changeEyesColors = function () {
+//   var wizardEyesColors = [
+//     'black',
+//     'red',
+//     'blue',
+//     'green',
+//     'yellow'
+//   ];
+
+//   wizardEyes.style.fill = getRandomArrItem(wizardEyesColors);
+// };
+
+// меняем цвет фаербола
+// var changeFireballColors = function () {
+//   var fireballColors = [
+//     '#ee4830',
+//     '#30a8ee',
+//     '#5ce6c0',
+//     '#e848d5',
+//     '#e6e848'
+//   ];
+
+//   fireball.style.backgroundColor = getRandomArrItem(fireballColors);
+// };
+
+// получаем случайный элемент массива
+// var getRandomArrItem = function (arr) {
+//   return arr[Math.floor(Math.random() * arr.length)];
+// };
+
+// wizardCoat.addEventListener('click', changeCoatColors);
+// wizardEyes.addEventListener('click', changeEyesColors);
+// fireball.addEventListener('click', changeFireballColors);
