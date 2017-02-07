@@ -1,6 +1,7 @@
 'use strict';
 window.colorizeElement = function (element, colors, property) {
-  var currentColor = colors[0];
+
+  var currentColor = element.style[property];
 
   element.addEventListener('click', function () {
     var newColor = null;
@@ -21,6 +22,7 @@ window.colorizeElement = function (element, colors, property) {
     element.style[property] = currentColor;
   });
 
+  // короткая запись, но цвета иногда повторяются
   // element.addEventListener('click', function () {
   //   element.style[property] = window.utils.getRandomElementExcept(colors, currentColor);
   // });
