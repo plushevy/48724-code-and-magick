@@ -5,11 +5,10 @@ window.utils = {
     return array[Math.floor(Math.random() * array.length)];
   },
   'getRandomElementExcept': function (array, element) {
-    var newElement = null;
-    while (!newElement || newElement === element) {
+    var newElement = element;
+    while (newElement === element) {
       newElement = this.getRandomElement(array);
     }
     return newElement;
   }
-
 };
