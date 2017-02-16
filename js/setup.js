@@ -11,6 +11,13 @@
   var fireball = setup.querySelector('.setup-fireball-wrap');
   var buttonSave = setup.querySelector('.button.setup-submit');
 
+
+  // валидация полей формы имени пользователя
+  var validationSetupForm = function () {
+    userName.required = true;
+    userName.maxLength = 50;
+  };
+
   var wizardCoatColors = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
@@ -36,68 +43,100 @@
     '#e6e848'
   ];
 
-  // открытие - закрытие оверлея
-  var showOverlay = function () {
-    setup.classList.remove('invisible');
-    setupOpen.setAttribute('aria-pressed', true);
-    setupClose.setAttribute('aria-pressed', false);
-    buttonSave.setAttribute('aria-pressed', false);
+  window.enableSetup = (function () {
+    var onSetupClose = null;
 
-    document.addEventListener('keydown', setupKeydownHandler);
-  };
+      // открытие - закрытие оверлея
+    var showOverlay = function () {
+      setup.classList.remove('invisible');
+      setupOpen.setAttribute('aria-pressed', true);
+      setupClose.setAttribute('aria-pressed', false);
+      buttonSave.setAttribute('aria-pressed', false);
 
-  var closeOverlay = function () {
-    setup.classList.add('invisible');
-    setupOpen.setAttribute('aria-pressed', false);
-    setupClose.setAttribute('aria-pressed', true);
-    buttonSave.setAttribute('aria-pressed', true);
+      document.addEventListener('keydown', setupKeydownHandler);
+    };
 
-    document.removeEventListener('keydown', setupKeydownHandler);
-  };
-
-
-  // закрытие при нажатии на esc
-  var setupKeydownHandler = function (event) {
-    if (window.keyPress.isDeactivateEvent(event)) {
+    var closeOverlay = function () {
       setup.classList.add('invisible');
-    }
-  };
+      setupOpen.setAttribute('aria-pressed', false);
+      setupClose.setAttribute('aria-pressed', true);
+      buttonSave.setAttribute('aria-pressed', true);
 
-  // валидация полей формы имени пользователя
-  var validationSetupForm = function () {
-    userName.required = true;
-    userName.maxLength = 50;
-  };
+      document.removeEventListener('keydown', setupKeydownHandler);
 
-  setupOpen.addEventListener('click', showOverlay);
+      if (typeof onSetupClose === 'function') {
+        onSetupClose();
+      }
+    };
+
+    var setupKeydownHandler = function (event) {
+      if (window.keyPress.isDeactivateEvent(event)) {
+        setup.classList.add('invisible');
+      }
+    };
+
+    var onSetupClick = function (event) {
+      closeOverlay();
+    };
+
+    var onSetupKeydown = function (event) {
+      if (window.keyPress.isActivateEvent(event)) {
+        closeOverlay();
+      }
+    };
+
+    var openOverlay = function (callback) {
+      showOverlay();
+      setupClose.addEventListener('keydown', onSetupKeydown);
+      setupClose.addEventListener('click', onSetupClick);
+
+      onSetupClose = callback;
+    };
+
+    return {
+      openOverlay: openOverlay,
+      closeOverlay: closeOverlay
+    };
+  })();
+
+
+  setupOpen.addEventListener('click', window.enableSetup.openOverlay);
   setupOpen.addEventListener('keydown', function (event) {
     if (window.keyPress.isActivateEvent(event)) {
-      showOverlay();
-    }
-  });
-
-  setupClose.addEventListener('click', closeOverlay);
-  setupClose.addEventListener('keydown', function (event) {
-    if (window.keyPress.isActivateEvent(event)) {
-      closeOverlay();
+      window.enableSetup.openOverlay(function () {
+        setupOpen.focus();
+      });
     }
   });
 
   buttonSave.addEventListener('click', function (event) {
     event.preventDefault();
-    closeOverlay();
+    window.enableSetup.closeOverlay();
   });
   buttonSave.addEventListener('keydown', function (event) {
     if (window.keyPress.isActivateEvent(event)) {
       event.preventDefault();
-      closeOverlay();
+      window.enableSetup.closeOverlay();
     }
   });
 
-  // меняем цвет пальто, глаз и файрбола
-  window.colorizeElement(wizardCoat, wizardCoatColors, 'fill');
-  window.colorizeElement(wizardEyes, wizardEyesColors, 'fill');
-  window.colorizeElement(fireball, fireballColors, 'background');
+  // колбек-функция на два события клик и нажатие
+  var colorSetter = function (element, colors, property) {
+    var currentColor = element.style[property];
+    var changeRandomColors = function (event) {
+      if (event.type === 'click' || window.keyPress.isActivateEvent(event)) {
+        element.style[property] = window.utils.getRandomElementExcept(colors, currentColor);
+      }
+    };
+
+    element.addEventListener('click', changeRandomColors);
+    element.addEventListener('keydown', changeRandomColors);
+  };
+
+  // меняем цвет пальто, глаз и файрбола через колбек
+  window.colorizeElement(wizardCoat, wizardCoatColors, 'fill', colorSetter);
+  window.colorizeElement(wizardEyes, wizardEyesColors, 'fill', colorSetter);
+  window.colorizeElement(fireball, fireballColors, 'background', colorSetter);
 
   validationSetupForm();
 })();
