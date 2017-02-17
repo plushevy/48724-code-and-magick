@@ -93,16 +93,14 @@
       onSetupClose = callback;
     };
 
-    return {
-      openOverlay: openOverlay
-    };
+    return openOverlay;
   })();
 
 
-  setupOpen.addEventListener('click', window.enableSetup.openOverlay);
+  setupOpen.addEventListener('click', window.enableSetup);
   setupOpen.addEventListener('keydown', function (event) {
     if (window.keyPress.isActivateEvent(event)) {
-      window.enableSetup.openOverlay(function () {
+      window.enableSetup(function () {
         setupOpen.focus();
       });
     }
