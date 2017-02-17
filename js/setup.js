@@ -2,7 +2,7 @@
 
 (function () {
   var setup = document.querySelector('.setup');
-  var setupOpen = document.querySelector('.setup-open');
+  var setupOpen = document.querySelector('.setup-open-icon');
   var setupClose = setup.querySelector('.setup-close');
   var userName = setup.querySelector('.setup-user-name');
   var wizard = document.querySelector('#wizard');
@@ -10,6 +10,13 @@
   var wizardEyes = wizard.querySelector('#wizard-eyes');
   var fireball = setup.querySelector('.setup-fireball-wrap');
   var buttonSave = setup.querySelector('.button.setup-submit');
+
+
+  // валидация полей формы имени пользователя
+  var validationSetupForm = function () {
+    userName.required = true;
+    userName.maxLength = 50;
+  };
 
   var wizardCoatColors = [
     'rgb(101, 137, 164)',
@@ -36,68 +43,83 @@
     '#e6e848'
   ];
 
-  // открытие - закрытие оверлея
-  var showOverlay = function () {
-    setup.classList.remove('invisible');
-    setupOpen.setAttribute('aria-pressed', true);
-    setupClose.setAttribute('aria-pressed', false);
-    buttonSave.setAttribute('aria-pressed', false);
+  window.enableSetup = (function () {
+    var onSetupClose = null;
 
-    document.addEventListener('keydown', setupKeydownHandler);
-  };
+      // открытие - закрытие оверлея
+    var showOverlay = function () {
+      setup.classList.remove('invisible');
+      setupOpen.setAttribute('aria-pressed', true);
+      setupClose.setAttribute('aria-pressed', false);
+      buttonSave.setAttribute('aria-pressed', false);
 
-  var closeOverlay = function () {
-    setup.classList.add('invisible');
-    setupOpen.setAttribute('aria-pressed', false);
-    setupClose.setAttribute('aria-pressed', true);
-    buttonSave.setAttribute('aria-pressed', true);
+      document.addEventListener('keydown', setupKeydownHandler);
+    };
 
-    document.removeEventListener('keydown', setupKeydownHandler);
-  };
-
-
-  // закрытие при нажатии на esc
-  var setupKeydownHandler = function (event) {
-    if (window.keyPress.isDeactivateEvent(event)) {
+    var closeOverlay = function () {
       setup.classList.add('invisible');
-    }
-  };
+      setupOpen.setAttribute('aria-pressed', false);
+      setupClose.setAttribute('aria-pressed', true);
+      buttonSave.setAttribute('aria-pressed', true);
 
-  // валидация полей формы имени пользователя
-  var validationSetupForm = function () {
-    userName.required = true;
-    userName.maxLength = 50;
-  };
+      document.removeEventListener('keydown', setupKeydownHandler);
 
-  setupOpen.addEventListener('click', showOverlay);
+      if (typeof onSetupClose === 'function') {
+        onSetupClose();
+      }
+    };
+
+    // ждем ESC
+    var setupKeydownHandler = function (event) {
+      if (window.keyPress.isDeactivateEvent(event)) {
+        closeOverlay();
+      }
+    };
+
+    // ждем Enter
+    var closeOnSetupKeydown = function (event) {
+      if (window.keyPress.isActivateEvent(event)) {
+        closeOverlay();
+      }
+    };
+
+    var closeOnSetupClick = function (event) {
+      closeOverlay();
+    };
+
+    var openOverlay = function (callback) {
+      showOverlay();
+      setupClose.addEventListener('keydown', closeOnSetupKeydown);
+      setupClose.addEventListener('click', closeOnSetupClick);
+
+      onSetupClose = callback;
+    };
+
+    return openOverlay;
+  })();
+
+
+  setupOpen.addEventListener('click', window.enableSetup);
   setupOpen.addEventListener('keydown', function (event) {
     if (window.keyPress.isActivateEvent(event)) {
-      showOverlay();
+      window.enableSetup(function () {
+        setupOpen.focus();
+      });
     }
   });
 
-  setupClose.addEventListener('click', closeOverlay);
-  setupClose.addEventListener('keydown', function (event) {
-    if (window.keyPress.isActivateEvent(event)) {
-      closeOverlay();
-    }
-  });
 
-  buttonSave.addEventListener('click', function (event) {
-    event.preventDefault();
-    closeOverlay();
-  });
-  buttonSave.addEventListener('keydown', function (event) {
-    if (window.keyPress.isActivateEvent(event)) {
-      event.preventDefault();
-      closeOverlay();
+  var colorSetter = function (element, color) {
+    if (element.tagName === 'g') {
+      element.style.fill = color;
+    } else {
+      element.style.background = color;
     }
-  });
+  };
 
-  // меняем цвет пальто, глаз и файрбола
-  window.colorizeElement(wizardCoat, wizardCoatColors, 'fill');
-  window.colorizeElement(wizardEyes, wizardEyesColors, 'fill');
-  window.colorizeElement(fireball, fireballColors, 'background');
+  window.colorizeElement(wizardCoat, wizardCoatColors, colorSetter);
+  window.colorizeElement(wizardEyes, wizardEyesColors, colorSetter);
+  window.colorizeElement(fireball, fireballColors, colorSetter);
 
   validationSetupForm();
 })();
