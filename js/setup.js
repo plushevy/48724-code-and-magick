@@ -2,7 +2,7 @@
 
 (function () {
   var setup = document.querySelector('.setup');
-  var setupOpen = document.querySelector('.setup-open');
+  var setupOpen = document.querySelector('.setup-open-icon');
   var setupClose = setup.querySelector('.setup-close');
   var userName = setup.querySelector('.setup-user-name');
   var wizard = document.querySelector('#wizard');
