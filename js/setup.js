@@ -108,16 +108,18 @@
     }
   });
 
-  // колбек-функция на два события клик и нажатие
-  var colorSetter = function (element, changeRandomColors) {
-    element.addEventListener('click', changeRandomColors);
-    element.addEventListener('keydown', changeRandomColors);
+
+  var colorSetter = function (element, color) {
+    if (element.tagName === 'g') {
+      element.style.fill = color;
+    } else {
+      element.style.background = color;
+    }
   };
 
-  // меняем цвет пальто, глаз и файрбола через колбек
-  window.colorizeElement(wizardCoat, wizardCoatColors, 'fill', colorSetter);
-  window.colorizeElement(wizardEyes, wizardEyesColors, 'fill', colorSetter);
-  window.colorizeElement(fireball, fireballColors, 'background', colorSetter);
+  window.colorizeElement(wizardCoat, wizardCoatColors, colorSetter);
+  window.colorizeElement(wizardEyes, wizardEyesColors, colorSetter);
+  window.colorizeElement(fireball, fireballColors, colorSetter);
 
   validationSetupForm();
 })();
