@@ -69,26 +69,28 @@
       }
     };
 
+    // ждем ESC
     var setupKeydownHandler = function (event) {
       if (window.keyPress.isDeactivateEvent(event)) {
-        setup.classList.add('invisible');
+        closeOverlay();
       }
     };
 
-    var onSetupClick = function (event) {
-      closeOverlay();
-    };
-
-    var onSetupKeydown = function (event) {
+    // ждем Enter
+    var closeOnSetupKeydown = function (event) {
       if (window.keyPress.isActivateEvent(event)) {
         closeOverlay();
       }
     };
 
+    var closeOnSetupClick = function (event) {
+      closeOverlay();
+    };
+
     var openOverlay = function (callback) {
       showOverlay();
-      setupClose.addEventListener('keydown', onSetupKeydown);
-      setupClose.addEventListener('click', onSetupClick);
+      setupClose.addEventListener('keydown', closeOnSetupKeydown);
+      setupClose.addEventListener('click', closeOnSetupClick);
 
       onSetupClose = callback;
     };
