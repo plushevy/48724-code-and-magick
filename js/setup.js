@@ -94,8 +94,7 @@
     };
 
     return {
-      openOverlay: openOverlay,
-      closeOverlay: closeOverlay
+      openOverlay: openOverlay
     };
   })();
 
@@ -109,26 +108,8 @@
     }
   });
 
-  buttonSave.addEventListener('click', function (event) {
-    event.preventDefault();
-    window.enableSetup.closeOverlay();
-  });
-  buttonSave.addEventListener('keydown', function (event) {
-    if (window.keyPress.isActivateEvent(event)) {
-      event.preventDefault();
-      window.enableSetup.closeOverlay();
-    }
-  });
-
   // колбек-функция на два события клик и нажатие
-  var colorSetter = function (element, colors, property) {
-    var currentColor = element.style[property];
-    var changeRandomColors = function (event) {
-      if (event.type === 'click' || window.keyPress.isActivateEvent(event)) {
-        element.style[property] = window.utils.getRandomElementExcept(colors, currentColor);
-      }
-    };
-
+  var colorSetter = function (element, changeRandomColors) {
     element.addEventListener('click', changeRandomColors);
     element.addEventListener('keydown', changeRandomColors);
   };
