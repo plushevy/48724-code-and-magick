@@ -10,6 +10,8 @@
   var wizardEyes = wizard.querySelector('#wizard-eyes');
   var fireball = setup.querySelector('.setup-fireball-wrap');
   var buttonSave = setup.querySelector('.button.setup-submit');
+  var DATA_URL = 'https://intensive-javascript-server-myophkugvq.now.sh/code-and-magick/data11';
+  var wizards;
 
 
   // валидация полей формы имени пользователя
@@ -89,6 +91,11 @@
 
     var openOverlay = function (callback) {
       showOverlay();
+      // load()
+      window.load(DATA_URL, function (data) {
+        wizards = JSON.parse(data);
+        console.log(wizards);
+      });
       setupClose.addEventListener('keydown', closeOnSetupKeydown);
       setupClose.addEventListener('click', closeOnSetupClick);
 
