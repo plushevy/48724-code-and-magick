@@ -13,17 +13,7 @@ window.load = (function () {
     var xhr = new XMLHttpRequest();
     loadXhr = onLoad;
 
-    var errorHandler = function () {
-      alert('Something wrong');
-    };
-
-    xhr.addEventListener('load', function (event) {
-      if ((event.target.status >= 200) && (event.target.status < 400)) {
-        loadHandler();
-      } else {
-        errorHandler();
-      }
-    });
+    xhr.addEventListener('load', loadHandler);
 
     xhr.open('GET', dataUrl);
     xhr.send();
